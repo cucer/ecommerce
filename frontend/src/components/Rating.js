@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 const Rating = ({ value, text, color }) => {
   // Props da color tanımladık ama çağırıldığı yerde color göndermedik, onun yerine defaultProps dan alacağız sayfanın altında
-  console.log('rating value', value)
   return (
     <div className='rating'>
       <span>
