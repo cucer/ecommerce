@@ -6,6 +6,7 @@ const express = require('express'),
   colors = require('colors'),
   productRoutes = require('./routes/productRoutes'),
   userRoutes = require('./routes/userRoutes'),
+  orderRoutes = require('./routes/orderRoutes'),
   errorMiddleware = require('./middleware/errorMiddleware')
 
 dotenv.config()
@@ -42,6 +43,7 @@ app.get('/api/products/:id', (req, res) => {
 */
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/orders', orderRoutes)
 
 app.use(errorMiddleware.notFound)
 app.use(errorMiddleware.errorHandler)

@@ -10,18 +10,18 @@ import Loader from '../components/Loader'
 import { listProductDetails } from '../actions/productActions'
 
 const ProductScreen = ({ match, history }) => {
-  const [qty, setQty] = useState(1)
-
-  /* Bu iptal çünkü artık backendden gelecek
-  const product = products.find((p) => p._id === match.params.id) // buradaki id route dan gelen :id
-  */
-
   // const [product, setProduct] = useState({}) // REDUX gelince gerek kalmadı
   const dispatch = useDispatch()
 
   // REDUX state den bütün ihtiyacımız olan bilgileri aşağıdaki gibi alırız
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
+
+  const [qty, setQty] = useState(1)
+
+  /* Bu iptal çünkü artık backendden gelecek
+  const product = products.find((p) => p._id === match.params.id) // buradaki id route dan gelen :id
+  */
 
   useEffect(() => {
     dispatch(listProductDetails(match.params.id))

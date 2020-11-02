@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
@@ -6,6 +6,12 @@ import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartScreen = ({ match, location, history }) => {
+  const dispatch = useDispatch()
+
+  // REDUX state den bütün ihtiyacımız olan bilgileri aşağıdaki gibi alırız
+  const cart = useSelector((state) => state.cart)
+  const { cartItems } = cart
+
   const productId = match.params.id
 
   //location.search sonucu ?qty=1 gibi gelir, bu yüzden split ile ayırmak lazım
@@ -13,19 +19,11 @@ const CartScreen = ({ match, location, history }) => {
   //location.search.split('=')[1] bize qty i verir ama numaraya çevirmek lazım
   const qty = location.search ? Number(location.search.split('=')[1]) : 1
 
-  const dispatch = useDispatch()
-
-  const cart = useSelector((state) => state.cart)
-  const { cartItems } = cart
-  console.log(cartItems)
-
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty))
     }
   }, [dispatch, productId, qty])
-
-  console.log(qty)
 
   const removeFromCartHandler = (id) => {
     console.log('remove')

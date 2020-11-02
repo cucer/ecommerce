@@ -6,7 +6,6 @@ const router = express.Router()
 
 router.route('/').post(userController.registerUser)
 router.post('/login', userController.authUser)
-
 router
   .route('/profile')
   .get(protect, userController.getUserProfile)

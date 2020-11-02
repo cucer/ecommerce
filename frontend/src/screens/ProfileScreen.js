@@ -6,12 +6,6 @@ import Loader from '../components/Loader'
 import { getUserDetails, userUpdateProfile } from '../actions/userActions'
 
 const ProfileScreen = ({ history, location }) => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [message, setMessage] = useState(null)
-
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails)
@@ -24,6 +18,12 @@ const ProfileScreen = ({ history, location }) => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success } = userUpdateProfile
 
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [message, setMessage] = useState(null)
+
   console.log('user', user)
   console.log('userInfo', userInfo)
 
@@ -34,10 +34,8 @@ const ProfileScreen = ({ history, location }) => {
     } else {
       if (!user.name) {
         // actiona profile gönderiyoruz, id için
-        console.log('1')
         dispatch(getUserDetails('profile'))
       } else {
-        console.log('2')
         // User varsa ekran aşağıdakiler gelsin, password otomatik gelmesin mantıksız
         setName(user.name)
         setEmail(user.email)
