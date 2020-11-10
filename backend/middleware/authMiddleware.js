@@ -7,7 +7,7 @@ const asyncHandler = require('express-async-handler')
 const protect = asyncHandler(async (req, res, next) => {
   let token
 
-  console.log(req.headers.authorization)
+  // console.log('authorization', req.headers.authorization)
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -17,7 +17,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-      console.log('decoded', decoded)
+      // console.log('decoded', decoded)
 
       req.user = await User.findById(decoded.id).select('-password')
       next()
@@ -34,4 +34,14 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 })
 
-module.exports = protect
+const admin = (req, res, next) => {
+  // console.log('admin', req.user)
+  if (req.user && req.user.isAdmin) {
+    next()
+  } else {
+    res.status(401)
+    throw new Error('Not authorized as an admin')
+  }
+}
+
+module.exports = { protect, admin }
