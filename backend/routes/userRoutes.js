@@ -18,6 +18,10 @@ router
 // router.route('/profile').get(auth.protect, userController.getUserProfile) //middleware var ama bu seferde update user eklenmemiş hali
 // router.route('/profile').get(userController.getUserProfile) //middlewaresiz hali
 
-router.route('/:id').delete(auth.protect, auth.admin, userController.deleteUser)
+router
+  .route('/:id')
+  .delete(auth.protect, auth.admin, userController.deleteUser)
+  .get(auth.protect, auth.admin, userController.getUserById)
+  .put(auth.protect, auth.admin, userController.updateUser)
 
 module.exports = router

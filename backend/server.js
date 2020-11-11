@@ -7,7 +7,9 @@ const express = require('express'),
   productRoutes = require('./routes/productRoutes'),
   userRoutes = require('./routes/userRoutes'),
   orderRoutes = require('./routes/orderRoutes'),
-  errorMiddleware = require('./middleware/errorMiddleware')
+  uploadRoutes = require('./routes/uploadRoutes'),
+  errorMiddleware = require('./middleware/errorMiddleware'),
+  path = require('path')
 
 dotenv.config()
 
@@ -44,10 +46,17 @@ app.get('/api/products/:id', (req, res) => {
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/upload', uploadRoutes)
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_API)
 )
+
+const dirname = path.resolve()
+app.use('/uploads', express.static(path.join(dirname, '/uploads')))
+// const __dirname = path.resolve()
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+// __dirname sadece COMMON JS de kullanılabilir ES modüllerinde bu şekilde yazamayız
 
 app.use(errorMiddleware.notFound)
 app.use(errorMiddleware.errorHandler)

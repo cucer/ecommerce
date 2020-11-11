@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 const ProfileScreen = ({ history, location }) => {
   const dispatch = useDispatch()
@@ -30,15 +31,17 @@ const ProfileScreen = ({ history, location }) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
 
-  console.log('user', user)
-  console.log('userInfo', userInfo)
+  // console.log('user', user)
+  // console.log('userInfo', userInfo)
 
   useEffect(() => {
     // Login olmamışsa login sayfasına gitsin buraya giremesin
     if (!userInfo) {
       history.push('/login')
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET })
+
         // actiona profile gönderiyoruz, id için
         dispatch(getUserDetails('profile'))
         dispatch(listMyOrders())
@@ -48,7 +51,7 @@ const ProfileScreen = ({ history, location }) => {
         setEmail(user.email)
       }
     }
-  }, [dispatch, history, userInfo, user])
+  }, [dispatch, history, userInfo, user, success])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -56,7 +59,7 @@ const ProfileScreen = ({ history, location }) => {
       setMessage('Password do not match!')
     } else {
       //DISPATCH UPDATE PROFILE
-      dispatch(userUpdateProfile({ id: user._id, name, email, password }))
+      dispatch(updateUserProfile({ id: user._id, name, email, password }))
     }
   }
 
