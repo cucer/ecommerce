@@ -9,13 +9,20 @@ const express = require('express'),
   orderRoutes = require('./routes/orderRoutes'),
   uploadRoutes = require('./routes/uploadRoutes'),
   errorMiddleware = require('./middleware/errorMiddleware'),
-  path = require('path')
+  path = require('path'),
+  morgan = require('morgan')
 
 dotenv.config()
 
 connectDB()
 
 const app = express()
+
+// Morganı genelde devde kullanıyormuş brad, prodda kullanmazmış
+// Morgan ile dışarıdan gönderilen http requestleri terminalde görebiliriz
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
 
 // gönderilen json data ve bodyleri kabul eder, örneğin mail auth için postmanden json yollanması
 app.use(express.json())

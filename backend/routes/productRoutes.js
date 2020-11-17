@@ -43,6 +43,12 @@ router
   .post(auth.protect, auth.admin, productController.createProduct)
 
 router
+  .route('/:id/reviews')
+  .post(auth.protect, productController.createProductReview)
+
+router.get('/top', productController.getTopProducts)
+
+router
   .route('/:id')
   .get(productController.getProductById)
   .delete(auth.protect, auth.admin, productController.deleteProduct)

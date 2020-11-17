@@ -83,7 +83,7 @@ const OrderScreen = ({ match, history }) => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, order, orderId, successPay, successDeliver])
+  }, [dispatch, history, order, orderId, userInfo, successPay, successDeliver])
 
   const successPaymentHandler = (paymentResult) => {
     // paymentResult paypalden geliyor
