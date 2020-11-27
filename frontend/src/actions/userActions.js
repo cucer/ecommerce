@@ -88,13 +88,13 @@ export const register = (name, email, password) => async (dispatch) => {
       config
     )
 
-    // Önce register ol
+    // first register
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,
     })
 
-    // Sonra login ol
+    // then login
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data,
@@ -112,10 +112,9 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 }
 
-// ProfileScreen den çağırırken id vereceğiz
+// send id when calling from ProfileScreen
 export const getUserDetails = (id) => async (dispatch, getState) => {
   // console.log('id', id)
-
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -155,7 +154,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
@@ -167,7 +166,6 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     }
 
-    // data pass etmeye gerek yok sadece route ve config yeterli burada
     const { data } = await axios.put('/api/users/profile', user, config)
 
     dispatch({
@@ -175,7 +173,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       payload: data,
     })
 
-    // Updateden sonra tekrar login olup localstorage set edilmeli
+    // we have to login and set localstorage after update
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data,
@@ -242,7 +240,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     }
 
-    // const { data } = await axios.delete(`/api/users/${id}`, config) // data pass etmiyoruz aşağıdaki gibi çağırsak yeterli
+    // const { data } = await axios.delete(`/api/users/${id}`, config) // { data } is not necessary, just calling request
     await axios.delete(`/api/users/${id}`, config)
 
     dispatch({ type: USER_DELETE_SUCCESS })

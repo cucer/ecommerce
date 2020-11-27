@@ -31,7 +31,7 @@ const orderSchema = mongoose.Schema(
       required: true,
     },
     paymentResult: {
-      //come from paypal or stripe
+      // it comes from paypal or stripe
       id: { type: String },
       status: { type: String },
       update_time: { type: String },
@@ -70,7 +70,7 @@ const orderSchema = mongoose.Schema(
     },
   },
   {
-    // bu kısım options
+    // options
     timestamps: true,
   }
 )

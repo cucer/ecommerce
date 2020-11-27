@@ -41,7 +41,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @access Private
 const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
-    // buradaki user name ve emaili OrderScreen içinde kullanacağız
+    //we will use these datas in OrderScreen
     'user',
     'name email'
   )
@@ -64,7 +64,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     order.isPaid = true
     order.paidAt = Date.now()
 
-    // Burası paypalden gelecek
+    // it comes from paypal
     order.paymentResult = {
       id: req.body.id,
       status: req.body.status,

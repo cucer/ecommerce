@@ -8,6 +8,7 @@ import { savePaymentMethod } from '../actions/cartActions'
 const PaymentScreen = ({ history }) => {
   const dispatch = useDispatch()
 
+  // needed information from REDUX state
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
 
@@ -26,7 +27,7 @@ const PaymentScreen = ({ history }) => {
 
   return (
     <FormContainer>
-      {/* Payment için çağırıyoruz o yüzden  step3,step2,step1. Bkz. CheckoutSteps componenti */}
+      {/* See. CheckoutSteps component */}
       <CheckoutSteps step1 step2 step3 />
       <h1>Payment Method</h1>
       <Form onSubmit={submitHandler}>

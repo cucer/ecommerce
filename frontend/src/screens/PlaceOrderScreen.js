@@ -9,11 +9,12 @@ import { createOrder } from '../actions/orderActions'
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
 
+  // needed information from REDUX state
   const cart = useSelector((state) => state.cart)
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
 
-  //toFixed kullanırken noktadan sonra 1 hane gidebiliyor, onu halletmek için yaratıldı
+  // we define this method because sometimes toFixed can delete last decimal
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
   }

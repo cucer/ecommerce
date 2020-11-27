@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Rating = ({ value, text, color }) => {
-  // Props da color tanımladık ama çağırıldığı yerde color göndermedik, onun yerine defaultProps dan alacağız sayfanın altında
+  // we use defaultProps for color, bu we can send props if we want
   return (
     <div className='rating'>
       <span>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-//ÖNEMLİ, Header de match ve history propslarına direk erişimimiz yok, Searchbox içerisinde history kullanabilmek için componenti eklerken Route ile ekleyip prop göndermek gerekiyor
+// IMPORTANT! we dont have access to "match" and "history" props in Header. If we want to use these props in "Searchbox", we have to use it with Router to send props
 import { Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
@@ -27,7 +27,7 @@ const Header = () => {
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            {/* <SearchBox /> //ÖNEMLİ, Header de match ve history propslarına direk erişimimiz yok, Searchbox içerisinde history kullanabilmek için componenti eklerken Route ile eklemek gerekiyor buraya */}
+            {/* <SearchBox /> // IMPORTANT! we dont have access to "match" and "history" props in Header. If we want to use these props in "Searchbox", we have to use it with Router to send props */}
             <Route render={({ history }) => <SearchBox history={history} />} />
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>

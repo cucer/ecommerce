@@ -2,8 +2,6 @@ import React from 'react'
 import { Nav } from 'react-bootstrap'
 import LinkContainer from '../components/FormContainer'
 
-// Bu component çağırıldığı sayfada hangi tep için çağırılacaksa ona göre step gönderilir, ama ondan önceki stepi varsa o da parametrik gönderilir
-// Örneğin shipping için çağırılacaksa hem step1 hem step2 gönderilir
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   return (
     <Nav className='justify-content-center mb-4'>

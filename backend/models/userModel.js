@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema(
     },
   },
   {
-    // bu kısım options
+    // options
     timestamps: true,
   }
 )

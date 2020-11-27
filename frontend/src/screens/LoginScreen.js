@@ -10,6 +10,7 @@ import { login } from '../actions/userActions'
 const LoginScreen = ({ history, location }) => {
   const dispatch = useDispatch()
 
+  // needed information from REDUX state
   const userLogin = useSelector((state) => state.userLogin)
   const { loading, error, userInfo } = userLogin
 

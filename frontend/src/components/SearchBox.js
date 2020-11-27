@@ -2,17 +2,16 @@ import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 
 const SearchBox = ({ history }) => {
-  // Burada girilen keywordu HomeScreen de kullanacağız
+  // we will use this "keyword" in HomeScreen
   const [keyword, setKeyword] = useState('')
 
   const submitHandler = (e) => {
     e.preventDefault()
 
-    //trim ile whitespaceleri yok ettik
+    //trim for whitespaces
     if (keyword.trim()) {
-      //ÖNEMLİ, Searchbox ın çağırıldığı Header de match ve history propslarına direk erişimimiz yok, Searchbox içerisinde history kullanabilmek için componenti eklerken Route ile ekleyip prop göndermek gerekiyor, burada gelenlen direk Headerdan gönderilen proplar
-      // Screenler gibi App.js de path tanımımız olmadığı için böyle sanırım
-      // Header dan prop gönderilmeseydi history undefined olacaktı
+      // IMPORTANT! we dont have access to "match" and "history" props in Header. If we want to use these props in "Searchbox", we have to use it with Router to send props (Check our Header.js)
+      // if we dont send prop from Heder, "history" will be "undefined"
       history.push(`/search/${keyword}`)
     } else {
       history.push('/')

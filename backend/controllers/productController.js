@@ -5,30 +5,32 @@ const Product = require('../models/productModel')
 // @route  GET /api/products
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 2 // pagination, how many per page do you want? Mesela Buraya 10 desek ama sadece 6 ürünümüz olsa pagination gözükmeyecek ama 20 ürünümüz olsa 2 sayfa gösterecek. Bölen burası
+  const pageSize = 2 // pagination(divider), how many per page do you want?
+  // for example: if we have only 6 products and pageSize = 10 >>> pagination will not appear
+  // for example: if we have 20 products and pageSize = 10 >>> pagination will show 2 pages
   const page = Number(req.query.pageNumber) || 1 // current page
 
   const keyword = req.query.keyword
     ? {
         name: {
-          // regular express kullandı, yazmaya başladığında kelimeleri bulmaya başlayacak. "iph" yazsa iphone gelecek
+          // regular express kullandı, when you type it will appear. type "iph" and iphone comes
           $regex: req.query.keyword,
           $options: 'i', // case insensitive
         },
       }
     : {}
 
-  const count = await Product.countDocuments({ ...keyword }) // kaç product var
+  const count = await Product.countDocuments({ ...keyword }) // how many product?
 
-  // ADIM ADIM SEARCHBOX ve PAGINATION EKLENMESİ
-  // const products = await Product.find({}) //Searchboxdan gelen keyword ile çalışacak hale getirdik
-  // const products = await Product.find({ ...keyword }) //pagination ekledik
-  // const products = await Product.find({ ...keyword }).limit(pageSize) //sadece pagesize kadar ürün getir, buradaki problem hangi 2(pagesize) ürünü getirecek
+  // STEP BY STEP SEARCHBOX and PAGINATION improvement
+  // const products = await Product.find({}) // add keyword from Searchboxdan
+  // const products = await Product.find({ ...keyword }) // add pagination
+  // const products = await Product.find({ ...keyword }).limit(pageSize) // add divider, which 2 products will it bring(this is problem!)
   const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
-  // express-async-handler sayesinde express içinde try catch kullanmak zorunda kalmıyoruz
+  // we use express-async-handler, so we dont have to use try catch in express
   // res.json(products)
   res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
@@ -43,7 +45,7 @@ const getProductById = asyncHandler(async (req, res) => {
   } else {
     // res.status(404).json({ message: 'Product Not Found' })
     res.status(404)
-    // buradan çıkan mesaj errorHandler middlewaremize gidecek, oradan gösterilecek, çünkü artık error için bir middlewaremiz var burada throw error kullanabiliriz
+    // these errors will be shown by errorHandler middleware, we have middleware for errors
     throw new Error('Product not found')
   }
 })
@@ -135,7 +137,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     }
 
     const review = {
-      // Burası modelden geliyor
+      // it comes from model
       name: req.user.name,
       rating: Number(rating),
       comment,

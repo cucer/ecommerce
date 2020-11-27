@@ -33,7 +33,7 @@ const App = () => {
           <Route path='/register' component={RegisterScreen} />
           <Route path='/profile' component={ProfileScreen} />
           <Route path='/product/:id' component={ProductScreen} />
-          {/*  Cart sayfasına id siz de gidilebilir bu yüzden id optional ?*/}
+          {/*  We can go to Cart  page without id. So id is optional ?*/}
           <Route path='/cart/:id?' component={CartScreen} />
           <Route path='/admin/userlist' component={UserListScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />

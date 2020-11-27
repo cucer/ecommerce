@@ -13,40 +13,37 @@ import ProductCarousel from '../components/ProductCarousel'
 import { listProducts } from '../actions/productActions'
 
 const HomeScreen = ({ match }) => {
-  // const [products, setProducts] = useState([]) //REDUX gelince gerek kalmadı
+  // const [products, setProducts] = useState([]) // we use REDUX, so they are not necessary
   const dispatch = useDispatch()
 
-  // REDUX state den bütün ihtiyacımız olan bilgileri aşağıdaki gibi alırız
+  // needed information from REDUX state
   const productList = useSelector((state) => state.productList)
   const { loading, error, products, pages, page } = productList
 
-  // Searchboxdan gelen keyword
+  // keyword from Searchboxdan
   const keyword = match.params.keyword
 
   const pageNumber = match.params.pageNumber || 1
 
   useEffect(() => {
-    // dispatch(listProducts()) //Searchboxdan gelen keyword ile çalışacak hale getirdik, actions içine tanımladık
-    // dispatch(listProducts(keyword)) // pagination ekledik
+    // dispatch(listProducts()) // add keyword
+    // dispatch(listProducts(keyword)) // add pagination
     dispatch(listProducts(keyword, pageNumber))
 
-    /* Burası artık kullanılmayacak çünkü products dataları REDUX tan alacağız
+    /* We dont use this part anymore, because we use REDUX 
     const fetchProducts = async () => {
-      // burada normalde get önyüze yani 3000 e gider ama backende yani 5000 gidip data alması lazım
-      // bunun düzgün çalışıp backend gitmesi için frontenddeki package.json içinde proxy yazmamız gerekiyor
+      // 3000 for frontend, 5000 for backend
+      // we have to define proxy in package.json for routes
       const { data } = await axios.get('/api/products')
       setProducts(data)
 
-      //Yukarıdaki yazılışla aynı şey demek daha modern yazılış şekli
-      //const { data } = await axios.get('/api/products')
-      //setProducts(data)
-      //const res = await axios.get('/api/products')
-      //setProducts(res.data)
-      
+      // samething with modern method
+      // const res = await axios.get('/api/products')
+      // setProducts(res.data)      
     }
     fetchProducts()
     */
-  }, [dispatch, keyword, pageNumber]) // bu arrayın içinde yazılan değer her değiştiğinde useEffect çalışsın demek
+  }, [dispatch, keyword, pageNumber])
 
   return (
     <>

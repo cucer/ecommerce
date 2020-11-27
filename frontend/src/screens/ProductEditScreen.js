@@ -12,6 +12,7 @@ import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 const ProductEditScreen = ({ history, match }) => {
   const dispatch = useDispatch()
 
+  // needed information from REDUX state
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
 
@@ -53,7 +54,7 @@ const ProductEditScreen = ({ history, match }) => {
   }, [dispatch, history, product, productId, successUpdate])
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0] //multiple file olabilir, arraydeki ilk elemanı al
+    const file = e.target.files[0] // it can be multiple, take first element in array
     const formData = new FormData()
     formData.append('image', file)
     setUploading(true)

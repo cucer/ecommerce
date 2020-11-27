@@ -10,7 +10,7 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email })
 
-  // usermodel içine tanıomladığımız bcryp compre kullanacağız
+  // we will use bcryp compare in user model
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
@@ -147,8 +147,8 @@ const getUserById = asyncHandler(async (req, res) => {
 // @desc   Update user
 // @route  PUT /api/users/:id
 // @access Private/Admin
-// Burası route da kullanılacak
 const updateUser = asyncHandler(async (req, res) => {
+  // we will use it in route
   const user = await User.findById(req.params.id)
   console.log('user', user)
   console.log('isAdmin', req.body.isAdmin)
@@ -156,7 +156,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
-    user.isAdmin = req.body.isAdmin || user.isAdmin //BURASI ÖNEMLİ, birinden biri gelmeyebilir bunu POSTMAN ile kontrol etmek lazım
+    user.isAdmin = req.body.isAdmin || user.isAdmin //important, one of them can be undefined, check by POSTMAN
 
     const updatedUser = await user.save()
 

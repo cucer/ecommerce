@@ -24,7 +24,6 @@ const ShippingScreen = ({ history }) => {
 
   return (
     <FormContainer>
-      {/* Shipping için çağırıyoruz o yüzden hem step2 yi hem de öncesinde step1 i göndermemiz lazım. Bkz. CheckoutSteps componenti */}
       <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>

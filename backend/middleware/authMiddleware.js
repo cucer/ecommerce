@@ -13,11 +13,9 @@ const protect = asyncHandler(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     try {
-      token = req.headers.authorization.split(' ')[1] //Bearer kelimesinden sonraki indexi al demek, yeni gönderilen tokenı
+      token = req.headers.authorization.split(' ')[1] // token comes after Bearer word
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-      // console.log('decoded', decoded)
 
       req.user = await User.findById(decoded.id).select('-password')
       next()

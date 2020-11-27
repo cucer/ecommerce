@@ -10,11 +10,11 @@ const connectDB = async () => {
     })
 
     console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline)
-    // cyan.underline yüklediğimiz colors libraryden geliyor, renk vermek için, şart değil
+    // cyan.underline comes from library, just for color, not necessary
   } catch (error) {
     console.log(`MongoDB Connection Error: ${error.message}`.red.underline.bold)
-    // red.underline.bold yüklediğimiz colors libraryden geliyor, renk vermek için, şart değil
-    process.exit(1) //1 exit with failure demek
+    // red.underline.bold comes from library, just for color, not necessary
+    process.exit(1) //1 = exit with failure
   }
 }
 

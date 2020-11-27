@@ -14,34 +14,32 @@ connectDB()
 
 const importData = async () => {
   try {
-    //   önce temizlieyelim sonra import ederiz
+    // first clean up then import
     await Order.deleteMany()
     await Product.deleteMany()
     await User.deleteMany()
 
     const createdUsers = await User.insertMany(users)
 
-    const adminUser = createdUsers[0]._id //user dosyasında manuel olarak ilk kişiyi admin yaptığımız için atamayı böyle yaptık
+    const adminUser = createdUsers[0]._id // we set first person as an admin in user file
 
     const sampleProducts = products.map((product) => {
-      // her biri producta adminuser ekleyeceğim dedi anlamadım
-      return { ...product, user: adminUser } /// ...product demek varolan productlar demek, sonra da user olarak adminUserı atadı, mongoya atarken user olarak admini yollayacak field olarak
+      return { ...product, user: adminUser } /// ...product means existing products, while inserting mongo we will send adminuser
     })
 
-    // yukarıdaki örnek datayı insert edecek
     await Product.insertMany(sampleProducts)
 
     console.log('Data Imported'.green.inverse)
     process.exit()
   } catch (error) {
     console.log(`Data Import Error: ${error}`.red.inverse)
-    process.exit(1) // 1 failure demek
+    process.exit(1)
   }
 }
 
 const destroyData = async () => {
   try {
-    //   sadece temizleme
+    // clean up
     await Order.deleteMany()
     await Product.deleteMany()
     await User.deleteMany()
@@ -50,11 +48,11 @@ const destroyData = async () => {
     process.exit()
   } catch (error) {
     console.log(`Data Destroy Error: ${error}`.red.inverse)
-    process.exit(1) // 1 failure demek
+    process.exit(1)
   }
 }
 
-// dışarıdan çağırırken node backend/seeder -d  yazılırsa buradaki -d destroyData demek
+// node backend/seeder -d, -d means destroyData
 // process.argv[2]
 
 if (process.argv[2] === '-d') {

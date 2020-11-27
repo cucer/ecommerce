@@ -9,17 +9,17 @@ const router = express.Router()
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'uploads/') //null for error
+    cb(null, 'uploads/') // null for error
   },
   filename(req, file, cb) {
     cb(
       null,
       `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-    ) //sondaki path ile dosyanın formatı neyse onu alır
+    ) // path.extname(file.originalname) >>> file format
   },
 })
 
-// içeri her türlü dosya upğload edilemesin diye filter koyacağız
+// we use filter, so users can not upload every file
 function checkFileType(file, cb) {
   const filetypes = /jpg|jpeg|png/
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
@@ -42,10 +42,5 @@ const upload = multer({
 router.post('/', upload.single('image'), (req, res) => {
   res.send(`/${req.file.path}`)
 })
-
-// router
-//   .route('/')
-//   .post(userController.registerUser)
-//   .get(auth.protect, auth.admin, userController.getUsers)
 
 module.exports = router

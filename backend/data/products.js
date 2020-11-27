@@ -1,4 +1,4 @@
-// _id leri sildik, mongo idleri kendi verecek
+// there is no mock _id, we will use mongo ids
 const products = [
   {
     name: 'Airpods Wireless Bluetooth Headphones',

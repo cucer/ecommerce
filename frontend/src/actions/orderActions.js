@@ -26,7 +26,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: ORDER_CREATE_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
@@ -61,14 +61,14 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       type: ORDER_DETAILS_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
 
     const config = {
       headers: {
-        // 'Content-Type': 'application/json',// get request olduğu için gerek yok
+        // 'Content-Type': 'application/json', // not necessary, it is a get request
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
@@ -99,7 +99,7 @@ export const payOrder = (orderId, paymentResult) => async (
       type: ORDER_PAY_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
@@ -138,7 +138,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
       type: ORDER_DELIVER_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
@@ -177,7 +177,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       type: ORDER_LIST_MY_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
@@ -211,7 +211,7 @@ export const listOrders = () => async (dispatch, getState) => {
       type: ORDER_LIST_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()

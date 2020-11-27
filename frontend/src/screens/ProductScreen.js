@@ -15,14 +15,13 @@ import {
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 const ProductScreen = ({ match, history }) => {
-  // const [product, setProduct] = useState({}) // REDUX gelince gerek kalmadı
   const dispatch = useDispatch()
 
-  // REDUX state den bütün ihtiyacımız olan bilgileri aşağıdaki gibi alırız
+  // needed information from REDUX state
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
 
-  // Comment için user bilgisi lazım
+  // we need user info for comments
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
@@ -36,8 +35,8 @@ const ProductScreen = ({ match, history }) => {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
 
-  /* Bu iptal çünkü artık backendden gelecek
-  const product = products.find((p) => p._id === match.params.id) // buradaki id route dan gelen :id
+  /* Cancelled, it comes from backend
+  const product = products.find((p) => p._id === match.params.id) // :id comes from route
   */
 
   useEffect(() => {
@@ -49,14 +48,14 @@ const ProductScreen = ({ match, history }) => {
     }
 
     dispatch(listProductDetails(match.params.id))
-    /* Burası artık kullanılmayacak çünkü products dataları REDUX tan alacağız
+    /* We dont use this part anymore, because we use REDUX 
     const fetchProduct = async () => {
       const { data } = await axios.get(`/api/products/${match.params.id}`)
       setProduct(data)
     }
     fetchProduct()
     */
-  }, [dispatch, match, successProductReview]) //dispatch redux ile eklendi, match değiştiğinde değişmesi lazım, zaten bunu buraya yazmasaydık vs code terminalde uyarı verirdi Line 21:6:  React Hook useEffect has a missing dependency: 'match.params.id'. Either include it or remove the dependency array  react-hooks/exhau
+  }, [dispatch, match, successProductReview])
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`)
@@ -86,7 +85,7 @@ const ProductScreen = ({ match, history }) => {
           <Meta title={product.name} />
           <Row>
             <Col md={6}>
-              {/* buraya fluid eklemezsen image ı kendi başına ayrı tutmaz, iç içe girer */}
+              {/* we have to use fluid */}
               <Image src={product.image} alt={product.image} fluid />
             </Col>
             <Col md={3}>
@@ -136,8 +135,8 @@ const ProductScreen = ({ match, history }) => {
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
                           >
-                            {/* [...Array(product.countInStock).keys()]  Bunun anlamı listede 5 value varsa [0,1,2,3,4] şeklinde getir demek*/}
-                            {/* Array 0 ile başlar ama biz qty 0 seçtiremeyiz 1 den başlsın diye x+1  yaptık */}
+                            {/* [...Array(product.countInStock).keys()]  >>> if there are 5 items in array it looks like  [0,1,2,3,4] */}
+                            {/* Array starts with 0. So we need minimum 1 element. We added x+1 */}
                             {[...Array(product.countInStock).keys()].map(
                               (x) => (
                                 <option key={x + 1} value={x + 1}>

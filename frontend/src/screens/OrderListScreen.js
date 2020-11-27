@@ -9,10 +9,11 @@ import { listOrders } from '../actions/orderActions'
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch()
 
+  // needed information from REDUX state
   const orderList = useSelector((state) => state.orderList)
   const { loading, error, orders } = orderList
 
-  // Sadece adminin görmesi gereken urller var, bunlra kontrol koymak için userInfo bilgisinden yararlanacağız
+  // There are urls for only admins, so we have to get user info to check these urls
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 

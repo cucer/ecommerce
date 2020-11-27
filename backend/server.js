@@ -18,16 +18,16 @@ connectDB()
 
 const app = express()
 
-// Morganı genelde devde kullanıyormuş brad, prodda kullanmazmış
-// Morgan ile dışarıdan gönderilen http requestleri terminalde görebiliriz
+// we use Morgan generally in dev enviroment, not production
+// we can see http requests in terminal
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
 
-// gönderilen json data ve bodyleri kabul eder, örneğin mail auth için postmanden json yollanması
+// accepts json data and body(postman json)
 app.use(express.json())
 
-/*req, res kontrol edebilmek veya okuyabilmek için middleware ekleyebiliriz
+/*req, res we can add middleware to check req, res
 app.use((req, res, next) => {
   console.log('URL', req.originalUrl)
   next()
@@ -38,10 +38,10 @@ app.get('/', (req, res) => {
   res.send('API is running')
 })
 
-/* BURDAKİ KODLAR ROUTER içine alındı
-// api/products yazarak pathi biz belirlemiş olduk, http://localhost:5000/api/products gidersen json görürsün
+/* we transferred these codes to router
+// api/products = http://localhost:5000/api/products
 app.get('/api/products', (req, res) => {
-  // gelen data json olacağı için send değil json kullandık
+  // we use "json" not "send". because products = json
   res.json(products)
 })
 
@@ -50,6 +50,7 @@ app.get('/api/products/:id', (req, res) => {
   res.json(product)
 })
 */
+
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
@@ -63,7 +64,7 @@ const dirname = path.resolve()
 app.use('/uploads', express.static(path.join(dirname, '/uploads')))
 // const __dirname = path.resolve()
 // app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
-// __dirname sadece COMMON JS de kullanılabilir ES modüllerinde bu şekilde yazamayız
+// "__dirname" only in COMMON JS not use in ES modules
 
 app.use(errorMiddleware.notFound)
 app.use(errorMiddleware.errorHandler)
@@ -75,4 +76,4 @@ app.listen(
   PORT,
   console.log(`Server running in ${MODE} mode on port ${PORT}`.yellow.bold)
 )
-// yellow.bold yüklediğimiz colors libraryden geliyor, renk vermek için, şart değil
+// yellow.bold comes from library, just for color, not necessary

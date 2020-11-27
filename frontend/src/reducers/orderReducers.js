@@ -36,7 +36,7 @@ export const orderCreateReducer = (state = {}, action) => {
 }
 
 export const orderDetailsReducer = (
-  state = { loading: true, orderItems: [], shippingAddress: {} }, //loading default true koydu, herhalde bir yerde hata almış ondan bunu efault atadı
+  state = { loading: true, orderItems: [], shippingAddress: {} }, // loading is default true, we have an error somewhere(check later)
   action
 ) => {
   switch (action.type) {

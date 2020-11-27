@@ -25,14 +25,12 @@ import {
   PRODUCT_TOP_FAIL,
 } from '../constants/productConstants'
 
-// ÖNEMLİ, buray eklenen her reducer store dosyasına eklenmeli, çünkü sayfalara storedan gider!!!
-
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
       return { loading: true, products: [] }
     case PRODUCT_LIST_SUCCESS:
-      // return { loading: false, products: action.payload } // backendde controllerda getProducts da artık sadece products dönmüyor, pagination vb eklendi o yüzden düzenledik
+      // return { loading: false, products: action.payload } // we added "pages" and "page" for "pagination"
       return {
         loading: false,
         products: action.payload.products,
@@ -52,7 +50,7 @@ export const productDetailsReducer = (
 ) => {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
-      return { loading: true, ...state } // state de ne varsa gelsin, boş gelmesin
+      return { loading: true, ...state } // ...state >>> state elements
     case PRODUCT_DETAILS_SUCCESS:
       return { loading: false, product: action.payload }
     case PRODUCT_DETAILS_FAIL:

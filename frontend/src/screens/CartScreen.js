@@ -8,15 +8,15 @@ import { addToCart, removeFromCart } from '../actions/cartActions'
 const CartScreen = ({ match, location, history }) => {
   const dispatch = useDispatch()
 
-  // REDUX state den bütün ihtiyacımız olan bilgileri aşağıdaki gibi alırız
+  // needed information from REDUX state
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
 
   const productId = match.params.id
 
-  //location.search sonucu ?qty=1 gibi gelir, bu yüzden split ile ayırmak lazım
-  //?qty ilk index yani 0, 1 ikinci index yani 1
-  //location.search.split('=')[1] bize qty i verir ama numaraya çevirmek lazım
+  // location.search >>> ?qty=1 (we must use split)
+  // "?qty" is first index >>> index[0], "1" is second index >>> index[1]
+  // location.search.split('=')[1] gives us "qty" But we have to convert it to the number
   const qty = location.search ? Number(location.search.split('=')[1]) : 1
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const CartScreen = ({ match, location, history }) => {
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h2>
-                {/* sondaki 0, başlangıç değeri */}
+                {/* 0 is initial value*/}
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 items
               </h2>
@@ -101,7 +101,7 @@ const CartScreen = ({ match, location, history }) => {
               {cartItems
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}
-              {/* toFixed decimal değer için */}
+              {/* toFixed if for decimal value */}
             </ListGroup.Item>
             <ListGroup.Item>
               <Button

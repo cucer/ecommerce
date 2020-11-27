@@ -15,6 +15,7 @@ import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
 
+  // needed information from REDUX state
   const productList = useSelector((state) => state.productList)
   const { loading, error, products, pages, page } = productList
 
@@ -33,7 +34,7 @@ const ProductListScreen = ({ history, match }) => {
     product: createdProduct,
   } = productCreate
 
-  // Sadece adminin görmesi gereken urller var, bunlra kontrol koymak için userInfo bilgisinden yararlanacağız
+  // There are urls for only admins, so we have to get user info to check these urls
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
@@ -54,8 +55,8 @@ const ProductListScreen = ({ history, match }) => {
     if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)
     } else {
-      // dispatch(listProducts()) // pagination ekledik
-      dispatch(listProducts('', pageNumber)) // ilk parametre keyword o yüzden burada boş verdik admin sayfasında gerek yok, 2.de pagination için
+      // dispatch(listProducts()) // add pagination
+      dispatch(listProducts('', pageNumber)) // first parameter for keyword but it is not necessary in admin page, second one is for pagination
     }
   }, [
     dispatch,
@@ -138,8 +139,6 @@ const ProductListScreen = ({ history, match }) => {
               ))}
             </tbody>
           </Table>
-          {/* ÖNEMLİ, buraya bu pagintion koymasaydım sadece 2 item gözükürdü, çünkü itemlar listelenirken artık pagination kurallarına bakıyor burası da aynı yere bakıyor yani backendde productController
-          içindeki getproductsa bakıyor orda da sadece 2 item var sayfa başına */}
           <Paginate pages={pages} page={page} isAdmin={true} />
         </>
       )}

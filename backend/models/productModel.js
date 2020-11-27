@@ -66,7 +66,7 @@ const productSchema = mongoose.Schema(
     },
   },
   {
-    // bu kısım options
+    // options
     timestamps: true,
   }
 )

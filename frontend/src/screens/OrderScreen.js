@@ -19,6 +19,7 @@ import {
 const OrderScreen = ({ match, history }) => {
   const dispatch = useDispatch()
 
+  // needed information from REDUX state
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
@@ -36,8 +37,7 @@ const OrderScreen = ({ match, history }) => {
   const [sdkReady, setSdkReady] = useState(false)
 
   if (!loading) {
-    //orer gelmemiş olabilir, ozaman hata alır
-    //toFixed kullanırken noktadan sonra 1 hane gidebiliyor, onu halletmek için yaratıldı
+    // we define this method because sometimes toFixed can delete last decimal
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2)
     }
@@ -57,16 +57,16 @@ const OrderScreen = ({ match, history }) => {
       const { data: clientId } = await axios.get('/api/config/paypal')
       console.log(clientId)
 
-      // Normal JS yazıyor burada
+      // COMMON JS
       const script = document.createElement('script')
       script.type = 'text/javascript'
       script.async = true
-      // Buradaki url Payplin sitesinden aldık Paypal SDK Scripti
+      // Paypal SDK Script
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
       script.onload = () => {
         setSdkReady(true)
       }
-      // Body e dynamic olarak Paypal scripti eklemiş olduk
+      // We added Paypal script to Body dynamically
       document.body.appendChild(script)
     }
 
@@ -86,7 +86,7 @@ const OrderScreen = ({ match, history }) => {
   }, [dispatch, history, order, orderId, userInfo, successPay, successDeliver])
 
   const successPaymentHandler = (paymentResult) => {
-    // paymentResult paypalden geliyor
+    // paymentResult comes from paypal
     console.log(paymentResult)
     dispatch(payOrder(orderId, paymentResult))
   }
@@ -108,7 +108,7 @@ const OrderScreen = ({ match, history }) => {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
-                {/* Buradaki user name ve email orderControllerdak, populate den gelir */}
+                {/* these "user name" and "email" comes from orderController populate */}
                 <strong>Name: </strong>
                 {order.user.name}
               </p>

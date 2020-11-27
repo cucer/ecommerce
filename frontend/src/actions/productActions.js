@@ -23,15 +23,14 @@ import {
   PRODUCT_TOP_FAIL,
 } from '../constants/productConstants'
 
-// ÖNEMLi!!! fonksiyon parantezden hemen sonra async bir fonksiyon daha yazdı, bunu yapmaya imkan sağlayan thunk
 export const listProducts = (keyword = '', pageNumber = '') => async (
   dispatch
 ) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
-    // const { data } = await axios.get('/api/products') //Searchboxdan gelen keyword ile çalışacak hale getirdik
-    // const { data } = await axios.get(`/api/products?keyword=${keyword}`) //pagination ekledik
+    // const { data } = await axios.get('/api/products') // add keyword from Searchbox
+    // const { data } = await axios.get(`/api/products?keyword=${keyword}`) // add pagination
     const { data } = await axios.get(
       `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
     )
@@ -72,7 +71,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       type: PRODUCT_DELETE_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
@@ -103,7 +102,7 @@ export const createProduct = () => async (dispatch, getState) => {
       type: PRODUCT_CREATE_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
@@ -137,7 +136,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
       type: PRODUCT_UPDATE_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
@@ -179,7 +178,7 @@ export const createProductReview = (productId, review) => async (
       type: PRODUCT_CREATE_REVIEW_REQUEST,
     })
 
-    // getState ile login olmuş userın bilgilerini alıyoruz, bu sayede tokenını aşağıda kullanabiliriz
+    // logged user from getState, we can use token below
     const {
       userLogin: { userInfo },
     } = getState()
