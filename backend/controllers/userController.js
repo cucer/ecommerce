@@ -1,13 +1,12 @@
 const asyncHandler = require('express-async-handler')
-const User = require('../models/userModel')
 const generateToken = require('../utils/generateToken')
+const User = require('../models/userModel')
 
 // @desc   Auth user & get token
 // @route  POST /api/users/login
 // @access Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
-
   const user = await User.findOne({ email })
 
   // we will use bcryp compare in user model
@@ -63,7 +62,6 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access Private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
-  console.log('user', user)
 
   if (user) {
     res.json({
@@ -83,13 +81,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
-  console.log('user', user)
 
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
     if (req.body.password) {
-      user.password = req.body.password || user.password
+      // user.password = req.body.password || user.password ???
+      user.password = req.body.password
     }
 
     const updatedUser = await user.save()
@@ -112,7 +110,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({})
-  console.log('users', users)
   res.json(users)
 })
 
@@ -136,6 +133,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password')
+
   if (user) {
     res.json(user)
   } else {
@@ -150,13 +148,12 @@ const getUserById = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   // we will use it in route
   const user = await User.findById(req.params.id)
-  console.log('user', user)
-  console.log('isAdmin', req.body.isAdmin)
 
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
-    user.isAdmin = req.body.isAdmin || user.isAdmin //important, one of them can be undefined, check by POSTMAN
+    // user.isAdmin = req.body.isAdmin || user.isAdmin //important, one of them can be undefined, check by POSTMAN
+    user.isAdmin = req.body.isAdmin
 
     const updatedUser = await user.save()
 

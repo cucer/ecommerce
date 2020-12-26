@@ -34,9 +34,11 @@ app.use((req, res, next) => {
 })
 */
 
+/*
 app.get('/', (req, res) => {
   res.send('API is running')
 })
+*/
 
 /* we transferred these codes to router
 // api/products = http://localhost:5000/api/products
@@ -65,6 +67,18 @@ app.use('/uploads', express.static(path.join(dirname, '/uploads')))
 // const __dirname = path.resolve()
 // app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 // "__dirname" only in COMMON JS not use in ES modules
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  )
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running....')
+  })
+}
 
 app.use(errorMiddleware.notFound)
 app.use(errorMiddleware.errorHandler)

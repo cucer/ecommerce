@@ -40,6 +40,7 @@ const getProducts = asyncHandler(async (req, res) => {
 // @access Public
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
+
   if (product) {
     res.json(product)
   } else {
@@ -153,7 +154,6 @@ const createProductReview = asyncHandler(async (req, res) => {
       product.reviews.length
 
     await product.save()
-
     res.status(201).json({ message: 'Review added' })
   } else {
     res.status(404)
@@ -166,7 +166,6 @@ const createProductReview = asyncHandler(async (req, res) => {
 // @access Public
 const getTopProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({}).sort({ rating: -1 }).limit(3)
-
   res.json(products)
 })
 

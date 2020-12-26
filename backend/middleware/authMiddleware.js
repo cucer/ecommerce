@@ -1,6 +1,6 @@
+const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
-const asyncHandler = require('express-async-handler')
 
 // Validate token middleware
 // middleware function req, res, next

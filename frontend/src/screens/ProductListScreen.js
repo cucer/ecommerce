@@ -48,7 +48,7 @@ const ProductListScreen = ({ history, match }) => {
     // } else {
     //   history.push('/login')
     // }
-    if (!userInfo.isAdmin) {
+    if (!userInfo || !userInfo.isAdmin) {
       history.push('/login')
     }
 

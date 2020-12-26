@@ -28,6 +28,7 @@ const ProductScreen = ({ match, history }) => {
   const productReviewCreate = useSelector((state) => state.productReviewCreate)
   const {
     success: successProductReview,
+    loading: loadingProductReview,
     error: errorProductReview,
   } = productReviewCreate
 
@@ -44,10 +45,14 @@ const ProductScreen = ({ match, history }) => {
       alert('Review submitted')
       setRating(0)
       setComment('')
+      // dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
+    }
+    if (!product._id || product._id !== match.params.id) {
+      dispatch(listProductDetails(match.params.id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
 
-    dispatch(listProductDetails(match.params.id))
+    // dispatch(listProductDetails(match.params.id))
     /* We dont use this part anymore, because we use REDUX 
     const fetchProduct = async () => {
       const { data } = await axios.get(`/api/products/${match.params.id}`)
