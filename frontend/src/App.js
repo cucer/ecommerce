@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+// ÖNEMLİ, normal Router dışarıya route yaparken kullanılır, BrowserRouter ise site için roue için kullanılır
 import { Container } from 'react-bootstrap'
 import Header from './components/Header'
 import Footer from './components/Footer'
