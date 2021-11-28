@@ -118,7 +118,6 @@ export const register = (name, email, password) => async (dispatch) => {
 
 // send id when calling from ProfileScreen
 export const getUserDetails = (id) => async (dispatch, getState) => {
-  // console.log('id', id)
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,

@@ -7,7 +7,6 @@ const User = require('../models/userModel')
 const protect = asyncHandler(async (req, res, next) => {
   let token
 
-  // console.log('authorization', req.headers.authorization)
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -33,7 +32,6 @@ const protect = asyncHandler(async (req, res, next) => {
 })
 
 const admin = (req, res, next) => {
-  // console.log('admin', req.user)
   if (req.user && req.user.isAdmin) {
     next()
   } else {

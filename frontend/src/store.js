@@ -29,10 +29,8 @@ import {
   orderListReducer,
 } from './reducers/orderReducers'
 
-// ÖNEMLİ, componentlere sayfalara dağıtım buradan storedan yapılır
-
 const reducer = combineReducers({
-  productList: productListReducer, // ÖNEMLİ: state e gözükecek olan productList
+  productList: productListReducer,
   productDetails: productDetailsReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
@@ -55,7 +53,6 @@ const reducer = combineReducers({
   orderList: orderListReducer,
 })
 
-// Eklenmiş item var mı?
 const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : []
@@ -81,7 +78,7 @@ const middleware = [thunk]
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware)) //thunk içinde ne varsa burya paslanacak
+  composeWithDevTools(applyMiddleware(...middleware)) //thunk
 )
 
 export default store
