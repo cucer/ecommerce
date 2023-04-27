@@ -1,47 +1,47 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Row, Col } from 'react-bootstrap'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
-import Paginate from '../components/Paginate'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { LinkContainer } from "react-router-bootstrap";
+import { Table, Button, Row, Col } from "react-bootstrap";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import Paginate from "../components/Paginate";
 import {
   listProducts,
   deleteProduct,
   createProduct,
-} from '../actions/productActions'
-import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+} from "../actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
 
 const ProductListScreen = ({ history, match }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // needed information from REDUX state
-  const productList = useSelector((state) => state.productList)
-  const { loading, error, products, pages, page } = productList
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products, pages, page } = productList;
 
-  const productDelete = useSelector((state) => state.productDelete)
+  const productDelete = useSelector((state) => state.productDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
-  } = productDelete
+  } = productDelete;
 
-  const productCreate = useSelector((state) => state.productCreate)
+  const productCreate = useSelector((state) => state.productCreate);
   const {
     loading: loadingCreate,
     error: errorCreate,
     success: successCreate,
     product: createdProduct,
-  } = productCreate
+  } = productCreate;
 
   // There are urls for only admins, so we have to get user info to check these urls
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
-  const pageNumber = match.params.pageNumber || 1
+  const pageNumber = match.params.pageNumber || 1;
 
   useEffect(() => {
-    dispatch({ type: PRODUCT_CREATE_RESET })
+    dispatch({ type: PRODUCT_CREATE_RESET });
 
     // if (userInfo && userInfo.isAdmin) {
     //   dispatch(listProducts())
@@ -49,14 +49,14 @@ const ProductListScreen = ({ history, match }) => {
     //   history.push('/login')
     // }
     if (!userInfo || !userInfo.isAdmin) {
-      history.push('/login')
+      history.push("/login");
     }
 
     if (successCreate) {
-      history.push(`/admin/product/${createdProduct._id}/edit`)
+      history.push(`/admin/product/${createdProduct._id}/edit`);
     } else {
       // dispatch(listProducts()) // add pagination
-      dispatch(listProducts('', pageNumber)) // first parameter for keyword but it is not necessary in admin page, second one is for pagination
+      dispatch(listProducts("", pageNumber)); // first parameter for keyword but it is not necessary in admin page, second one is for pagination
     }
   }, [
     dispatch,
@@ -66,18 +66,18 @@ const ProductListScreen = ({ history, match }) => {
     successCreate,
     createdProduct,
     pageNumber,
-  ])
+  ]);
 
   const deleteHandler = (id) => {
-    console.log('delete', id)
-    if (window.confirm('Are you sure?')) {
-      dispatch(deleteProduct(id))
+    console.log("delete", id);
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteProduct(id));
     }
-  }
+  };
 
   const createProductHandler = () => {
-    dispatch(createProduct())
-  }
+    dispatch(createProduct());
+  };
 
   return (
     <>
@@ -143,7 +143,7 @@ const ProductListScreen = ({ history, match }) => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ProductListScreen
+export default ProductListScreen;
